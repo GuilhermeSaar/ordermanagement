@@ -3,7 +3,6 @@ package com.gsTech.ordermanagement.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Entity
 @Table(name = "tb_client")
@@ -12,21 +11,21 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id; // gerado automaticamente
+    private long id; // gerado automaticamente
     private String name; // obrigatorio e minimo de 3 caracteres
     private String email; // obrigatorio e unico
     private LocalDate birthDate;
-    private LocalDate registrationDate;  // preenchido automaticamente ao criar o client;
+    //private LocalDate registrationDate;  // preenchido automaticamente ao criar o client;
 
 
     // constructors
 
-    public Client(UUID id, String name, String email, LocalDate birthDate, LocalDate registrationDate) {
+    public Client(long id, String name, String email, LocalDate birthDate) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
-        this.registrationDate = registrationDate;
+
     }
 
     // default
@@ -37,11 +36,11 @@ public class Client {
 
     // getters and setters
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -69,11 +68,11 @@ public class Client {
         this.birthDate = birthDate;
     }
 
-    public LocalDate getRegistrationDate() {
-        return registrationDate;
-    }
-
-    public void setRegistrationDate(LocalDate registrationDate) {
-        this.registrationDate = registrationDate;
-    }
+//    public LocalDate getRegistrationDate() {
+//        return registrationDate;
+//    }
+//
+//    public void setRegistrationDate(LocalDate registrationDate) {
+//        this.registrationDate = registrationDate;
+//    }
 }

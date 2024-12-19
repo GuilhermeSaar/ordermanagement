@@ -1,21 +1,19 @@
-package com.gsTech.ordermanagement.entities;
+package com.gsTech.ordermanagement.dto;
 
-import jakarta.persistence.*;
+import com.gsTech.ordermanagement.entities.Product;
 
-@Entity
-@Table(name = "tb_product")
-public class Product {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ProductDTO {
+
     private long id;
     private String name;
     private String description;
     private Double price;
     private int quantityStock;
 
-    // constructos
-    public Product(long id, String name, String description, Double price, int quantityStock) {
+
+    // constructors
+    public ProductDTO(long id, String name, String description, Double price, int quantityStock) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -23,7 +21,12 @@ public class Product {
         this.quantityStock = quantityStock;
     }
 
-    public Product() {
+    public ProductDTO(Product product) {
+        id = product.getId();
+        name = product.getName();
+        description = product.getDescription();
+        price = product.getPrice();
+        quantityStock = product.getQuantityStock();
     }
 
     // getters and setters

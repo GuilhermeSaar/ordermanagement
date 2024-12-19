@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "tb_order")
@@ -14,7 +14,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private long id;
     private LocalDate orderData; // preenchido automaticamente
 
     @ManyToOne
@@ -25,7 +25,7 @@ public class Order {
     private List<OrderItem> itens = new ArrayList<>();
 
     // constructors
-    public Order(UUID id, LocalDate orderData, Client client, Double totalValue) {
+    public Order(long id, LocalDate orderData, Client client, Double totalValue) {
         this.id = id;
         this.orderData = orderData;
         this.client = client;
@@ -45,11 +45,11 @@ public class Order {
 
     // getters and setters
 
-    public UUID getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(long id) {
         this.id = id;
     }
 
