@@ -32,9 +32,9 @@ public class ProductService {
 
     // listar todos produtos
     @Transactional(readOnly = true)
-    public List<ProductDTO> findAllProducts() {
+    public Page<Product> findAllProducts(Pageable pageable) {
 
-        return productRepository.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
+       return productRepository.findAll(pageable);
     }
 
 

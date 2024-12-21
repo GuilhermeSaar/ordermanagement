@@ -6,46 +6,59 @@ async function fetchClients() {
     try {
 
         const response = await fetch(`${apiUrl}/clients`);
-        const clients = await response.json();
+        const data = await response.json();
+
+        // acesse a lista de clients dentro de 'content'
+        const clients = data.content;
+
+        // verifique se os clients foram encontrados
+        if (clients.length === 0) {
+            console.log('Nenhum cliente encontrado')
+        }
+
         const clientList = document.getElementById('client-list');
         clientList.innerHTML = clients.map(client => `
             <div>
                 <h3>${client.name}</h3>
                 <p>ID: ${client.id}</p>
                 <p>Email: ${client.email}</p>
-                <p>Data de Nascimento: ${client.birthDate}</p>
-                
-            </div>      
+                <p>Data Nascimento: ${client.birthDate}</p>
+            </div>
         `).join('');
     } catch (error) {
         console.error('Erro ao buscar clientes:', error);
     }
 }
 
+
+// funcao para buscar produtos
 async function fetchProducts() {
     try {
-        const response = await fetch(`http://localhost:8080/products`);
-        const products = await response.json(); // A resposta agora é uma lista simples de produtos
+        const response = await fetch(`${apiUrl}/products`);
+        const data = await response.json(); // A resposta agora é um objeto com o campo 'content'
+
+        // Acesse a lista de produtos dentro de 'content'
+        const products = data.content;
 
         // Verifique se os produtos foram encontrados
         if (products.length === 0) {
             console.log('Nenhum produto encontrado');
         }
 
-        const productList = document.getElementById('products-list');
+        const productList = document.getElementById('product-list');
         productList.innerHTML = products.map(product => `
             <div>
                 <h3>${product.name}</h3>
                 <p>ID: ${product.id}</p>
+                <p>Descrição: ${product.description}</p>
                 <p>Preço: ${product.price}</p>
-                <p>Estoque: ${product.quantity_stock}</p>
+                <p>Estoque: ${product.quantityStock}</p>
             </div>
         `).join('');
     } catch (error) {
         console.error('Erro ao buscar produtos:', error);
     }
 }
-
 
 
 // Função para buscar os pedidos

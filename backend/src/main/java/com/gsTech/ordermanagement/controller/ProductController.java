@@ -1,11 +1,14 @@
 package com.gsTech.ordermanagement.controller;
 
 import com.gsTech.ordermanagement.dto.ProductDTO;
+import com.gsTech.ordermanagement.entities.Product;
 import com.gsTech.ordermanagement.services.ProductService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -32,9 +35,12 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductDTO>> findAllProducts() {
+    public ResponseEntity<Page<ProductDTO>> findAllProducts(Pageable pageable) {
 
-       return ResponseEntity.ok().body(productService.findAllProducts());
+       Page<Product> result = productService.findAllProducts(pageable);
+       Page<ProductDTO> resultDTO = result.map(ProductDTO::new);
+
+       return ResponseEntity.ok().body(resultDTO);
     }
 
     @PostMapping
