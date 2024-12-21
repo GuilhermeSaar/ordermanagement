@@ -1,0 +1,30 @@
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+h2 {
+    margin-top: 20px;
+    color: #555;
+}
+
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+div {
+    margin-bottom: 30px;
+}
+
+#client-list, #product-list, #order-list {
+    margin-top: 15px;
+}
+
+
+

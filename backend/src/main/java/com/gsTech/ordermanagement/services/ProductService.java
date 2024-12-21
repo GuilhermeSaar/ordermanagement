@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @Service
 public class ProductService {
@@ -27,12 +30,79 @@ public class ProductService {
         return new ProductDTO(product);
     }
 
-    // todos produtos
+    // listar todos produtos
     @Transactional(readOnly = true)
-    public Page<ProductDTO> findAllProducts(Pageable pageable) {
+    public List<ProductDTO> findAllProducts() {
 
-        Page<Product> products = productRepository.findAll(pageable);
-        return products.map(ProductDTO::new);
+        return productRepository.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
     }
-    
+
+
+    // criar novo produto
+    @Transactional
+    public ProductDTO createProduct(ProductDTO productDTO) {
+
+        Product product = new Product();
+        copyProduct(productDTO, product);
+        product = productRepository.save(product);
+        return new ProductDTO(product);
+    }
+
+    @Transactional
+    public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
+
+       Product product = productRepository.findById(id)
+               .orElseThrow(() -> new ResourceNotFoundException("Resource not found;"));
+
+       copyProduct(productDTO, product);
+       product = productRepository.save(product);
+       return new ProductDTO(product);
+
+    }
+
+    @Transactional
+    public void deleteProduct(Long id) {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Resource not found;"));
+
+        productRepository.delete(product);
+
+    }
+
+
+
+
+
+
+
+    private void copyProduct(ProductDTO productDTO, Product product) {
+        product.setName(productDTO.getName());
+        product.setPrice(productDTO.getPrice());
+        product.setDescription(productDTO.getDescription());
+        product.setQuantityStock(productDTO.getQuantityStock());
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

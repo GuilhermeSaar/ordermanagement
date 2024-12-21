@@ -1,14 +1,22 @@
 package com.gsTech.ordermanagement.dto;
 
 import com.gsTech.ordermanagement.entities.Product;
+import jakarta.validation.constraints.*;
 
 
 public class ProductDTO {
 
     private long id;
+
+    @NotBlank(message = "Insira pelo menos 2 letras;")
+    @Size(min = 2, max = 50, message = "O produto deve ter mais de 2 letras;")
     private String name;
+    @NotNull
     private String description;
+    @Positive(message = "Valor deve ser positivo;")
     private Double price;
+    @Positive
+    @Min(value = 1, message = "Deve ter pelo menos 1 produto no estoque;")
     private int quantityStock;
 
 
@@ -21,6 +29,9 @@ public class ProductDTO {
         this.quantityStock = quantityStock;
     }
 
+    public ProductDTO() {
+    }
+
     public ProductDTO(Product product) {
         id = product.getId();
         name = product.getName();
@@ -28,6 +39,7 @@ public class ProductDTO {
         price = product.getPrice();
         quantityStock = product.getQuantityStock();
     }
+
 
     // getters and setters
 
